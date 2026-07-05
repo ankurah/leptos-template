@@ -2,7 +2,7 @@ use leptos::prelude::*;
 use web_sys::KeyboardEvent;
 
 use ankurah_signals::Get as AnkurahGet;
-use ankurah_template_model::{Message, MessageView, RoomView, UserView};
+use {{crate_name}}_model::{Message, MessageView, RoomView, UserView};
 
 use crate::{ctx, ws_client};
 

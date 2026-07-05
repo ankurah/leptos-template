@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 
 use ankurah::LiveQuery;
-use ankurah_template_model::{MessageView, UserView};
+use {{crate_name}}_model::{MessageView, UserView};
 
 use crate::message_row::MessageRow;
 

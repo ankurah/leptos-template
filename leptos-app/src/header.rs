@@ -2,7 +2,7 @@ use leptos::prelude::*;
 use web_sys::window;
 
 use ankurah_signals::Get as AnkurahGet;
-use ankurah_template_model::UserView;
+use {{crate_name}}_model::UserView;
 
 use crate::{ctx, editable_text_field::EditableTextField, qr_code_modal::QRCodeModal, ws_client};
 
@@ -20,7 +20,7 @@ pub fn Header(current_user: RwSignal<Option<UserView>>) -> impl IntoView {
     view! {
         <>
             <div class="header">
-                <h1 class="title">"ankurah-template Chat"</h1>
+                <h1 class="title">"{{project-name}} Chat"</h1>
                 <div class="headerRight">
                     <button
                         class="qrButton"

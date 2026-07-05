@@ -45,7 +45,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: 'cargo run -p ankurah-template-server --release',
+      command: 'cargo run -p {{project-name}}-server --release',
       cwd: '..',
       port: parseInt(SERVER_PORT),
       env: { SERVER_PORT },

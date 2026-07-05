@@ -1,5 +1,5 @@
 [package]
-name = "ankurah-template-model"
+name = "{{project-name}}-model"
 version = "0.6.0"
 edition = "2021"
 publish = false

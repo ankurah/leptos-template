@@ -3,7 +3,7 @@ use std::sync::{Arc, Mutex};
 
 use ankurah::{LiveQuery, changes::ChangeSet};
 use ankurah_signals::{Mut, Peek, Subscribe, SubscriptionGuard};
-use ankurah_template_model::{MessageView, RoomView};
+use {{crate_name}}_model::{MessageView, RoomView};
 use send_wrapper::SendWrapper;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::spawn_local;

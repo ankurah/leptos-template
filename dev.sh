@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Development script for ankurah-template Chat (Leptos).
+# Development script for {{project-name}} Chat (Leptos).
 #
 # Background-first dev runner. Supervises two units under one process group
 # and publishes status to ~/.dev-runner/ so a Sutra dashboard can visualize this
@@ -8,7 +8,7 @@
 #   https://github.com/synestheticsystems/sutra/blob/main/docs/INTEGRATION.md
 #
 # Units:
-#   server  cargo run --release -p ankurah-template-server   (randomized port)
+#   server  cargo run --release -p {{project-name}}-server   (randomized port)
 #   web     trunk serve (Leptos -> wasm; serves + proxies /ws) (randomized port)
 #
 # Usage: ./dev.sh [--stop|--restart|--status|--logs|--build|--list|--stop-all|--help]
@@ -309,7 +309,7 @@ do_start() {
             clear_all_status || true
             stop_children
             # Reap anything still in our process group (incl. grandchildren).
-            # NOTE: we deliberately do NOT `pkill -f "ankurah-template-server"`
+            # NOTE: we deliberately do NOT `pkill -f "{{project-name}}-server"`
             # (or "trunk") here — a name/cmdline match is a footgun (it also kills
             # editors, greps, or log tails that merely mention the name).
             # Process-group reaping above is both scoped and complete.
@@ -325,15 +325,15 @@ do_start() {
             cd "$SCRIPT_DIR"
             f="$sf.server.status"
             printf "%s\n" "building: cargo" > "$f.tmp" && mv -f "$f.tmp" "$f"
-            if cargo build --release -p ankurah-template-server; then
+            if cargo build --release -p {{project-name}}-server; then
                 printf "%s\n" "running" > "$f.tmp" && mv -f "$f.tmp" "$f"
                 # exec so the tracked PID is the server (no lingering cargo layer);
                 # fall back to `cargo run` if the target dir is relocated.
-                bin="$SCRIPT_DIR/target/release/ankurah-template-server"
+                bin="$SCRIPT_DIR/target/release/{{project-name}}-server"
                 if [ -x "$bin" ]; then
                     exec "$bin"
                 else
-                    exec cargo run --release -p ankurah-template-server
+                    exec cargo run --release -p {{project-name}}-server
                 fi
             else
                 printf "%s\n" "failed: build error" > "$f.tmp" && mv -f "$f.tmp" "$f"
@@ -417,7 +417,7 @@ show_status() {
     pid="$(cat "$PID_FILE" 2>/dev/null || echo unknown)"
 
     echo ""
-    echo -e "${GREEN}ankurah-template dev environment running${NC}"
+    echo -e "${GREEN}{{project-name}} dev environment running${NC}"
     echo ""
     echo -e "  ${DIM}Server:${NC}    ${CYAN}http://127.0.0.1:$SERVER_PORT${NC} ($(status_line server))"
     echo -e "  ${DIM}Web:${NC}       ${CYAN}http://localhost:$WEB_PORT${NC} ($(status_line web))"
@@ -439,7 +439,7 @@ cmd_start() {
     clear_all_status || true
 
     echo ""
-    echo -e "${BOLD}Starting ankurah-template dev environment (Leptos)${NC}"
+    echo -e "${BOLD}Starting {{project-name}} dev environment (Leptos)${NC}"
     echo ""
     select_ports
     echo -e "  ${DIM}Ports:${NC} server=$SERVER_PORT  web=$WEB_PORT  ${DIM}(randomized; sticky in .dev-ports)${NC}"
@@ -465,7 +465,7 @@ cmd_stop() {
     fi
     local pid
     pid="$(cat "$PID_FILE")"
-    echo -e "Stopping ankurah-template dev environment (PID $pid)..."
+    echo -e "Stopping {{project-name}} dev environment (PID $pid)..."
     kill_process_group "$pid"
     rm -f "$PID_FILE"
     unregister_instance

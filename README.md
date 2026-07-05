@@ -1,4 +1,4 @@
-# ankurah-template Chat
+# {{project-name}} Chat
 
 A simple real-time chat application built with Ankurah, demonstrating distributed
 reactive updates across a Leptos (Rust/WASM) frontend and a Rust backend.
@@ -37,7 +37,7 @@ Requires [trunk](https://trunkrs.dev/) (`cargo install trunk`) and the wasm targ
 
 ```bash
 # 1. Server (WebSocket backend, Sled storage) — listens on 127.0.0.1:9898 by default
-cargo run -p ankurah-template-server
+cargo run -p {{project-name}}-server
 
 # 2. Leptos app — compiled to WASM, served by trunk which proxies /ws to the server
 cd leptos-app

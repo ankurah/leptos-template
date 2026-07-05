@@ -3,7 +3,7 @@ use leptos::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::{KeyboardEvent, MouseEvent, window};
 
-use ankurah_template_model::MessageView;
+use {{crate_name}}_model::MessageView;
 
 use crate::ctx;
 

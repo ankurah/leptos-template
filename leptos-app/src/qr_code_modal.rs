@@ -21,7 +21,7 @@ pub fn QRCodeModal(url: String, on_close: impl Fn() + Clone + 'static) -> impl I
         <div class="qrModalOverlay" on:click=move |_| on_close_overlay()>
             <div class="qrModalContent" on:click=|e| e.stop_propagation()>
                 <div class="qrModalHeader">
-                    <h2>"Scan to Connect to ankurah-template Chat"</h2>
+                    <h2>"Scan to Connect to {{project-name}} Chat"</h2>
                     <button class="qrCloseButton" on:click=move |_| on_close_button()>
                         "×"
                     </button>

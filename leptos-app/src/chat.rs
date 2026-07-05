@@ -6,7 +6,7 @@ use wasm_bindgen::JsCast;
 
 use ankurah::EntityId;
 use ankurah_signals::Get as AnkurahGet;
-use ankurah_template_model::{MessageView, RoomView, UserView};
+use {{crate_name}}_model::{MessageView, RoomView, UserView};
 use ankurah_virtual_scroll::{ScrollManager, ScrollMode};
 
 use crate::{

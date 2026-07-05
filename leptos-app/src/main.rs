@@ -3,7 +3,7 @@ use leptos::prelude::*;
 use ankurah::{Context, EntityId, Node, model::Mutable, policy::DEFAULT_CONTEXT as C, policy::PermissiveAgent};
 use ankurah_signals::{CurrentObserver, ReactiveGraphObserver};
 use ankurah_storage_indexeddb_wasm::IndexedDBStorageEngine;
-use ankurah_template_model::{RoomView, User, UserView};
+use {{crate_name}}_model::{RoomView, User, UserView};
 use ankurah_websocket_client_wasm::WebsocketClient;
 use lazy_static::lazy_static;
 use send_wrapper::SendWrapper;
@@ -59,7 +59,7 @@ fn main() {
 
 async fn initialize() {
     // Open IndexedDB-backed storage and create a Node.
-    let storage = IndexedDBStorageEngine::open("ankurah_template_app").await.expect("failed to open IndexedDB storage");
+    let storage = IndexedDBStorageEngine::open("{{crate_name}}_app").await.expect("failed to open IndexedDB storage");
     let node = Node::new(Arc::new(storage), PermissiveAgent::new());
 
     // Connect to the same origin the app was served from; in dev, trunk proxies
@@ -129,7 +129,7 @@ pub fn App() -> impl IntoView {
     }
 }
 
-const STORAGE_KEY_USER_ID: &str = "ankurah_template_user_id";
+const STORAGE_KEY_USER_ID: &str = "{{crate_name}}_user_id";
 
 /// Ensures a user exists, creating one if necessary.
 /// Stores the user ID in localStorage for persistence across sessions.
