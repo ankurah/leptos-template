@@ -95,6 +95,8 @@ jobs:
             - name: Prepare transformed tree
               run: |
                   set -euo pipefail
+                  # Remove dev-only files (akdev patches ankurah to a local checkout).
+                  rm -f akdev
                   find . -type f -not -path './.git/*' -print0 \
                     | xargs -0 perl -pi -e 's/ankurah-template/{{project-name}}/g'
                   find . -type f -not -path './.git/*' -print0 \
