@@ -115,6 +115,14 @@ pub fn App() -> impl IntoView {
     // Create notification manager with rooms query and current user ID
     let notification_manager = NotificationManager::new(rooms.clone(), current_user.get_untracked().map(|u| u.id().to_base64()));
 
+    // `current_user` is resolved asynchronously by `ensure_user`, so push the id
+    // into the NotificationManager once it's available (otherwise it stays None
+    // and treats your own messages as coming from others → chimes on send).
+    Effect::new({
+        let notification_manager = notification_manager.clone();
+        move |_| notification_manager.set_current_user_id(current_user.get().map(|u| u.id().to_base64()))
+    });
+
     view! {
         <DebugOverlay />
 

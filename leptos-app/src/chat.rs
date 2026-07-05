@@ -108,6 +108,19 @@ pub fn Chat(
         }
     });
 
+    // Mark the viewed room active while live so opening it clears its unread
+    // badge (mirrors the React effect that runs on room/manager change).
+    Effect::new({
+        let notification_manager = notification_manager.clone();
+        move |_| {
+            if let (Some(m), Some(r)) = (manager.get(), room.get()) {
+                if m.mode() == ScrollMode::Live {
+                    notification_manager.set_active_room(Some(r.id().to_base64()));
+                }
+            }
+        }
+    });
+
     view! {
         <Show
             when=move || room.get().is_some()

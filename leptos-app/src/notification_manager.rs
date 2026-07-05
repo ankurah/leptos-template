@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 use ankurah::{LiveQuery, changes::ChangeSet};
-use ankurah_signals::{Mut, Peek, Subscribe, SubscriptionGuard};
+use ankurah_signals::{Get, Mut, Peek, Subscribe, SubscriptionGuard};
 use {{crate_name}}_model::{MessageView, RoomView};
 use send_wrapper::SendWrapper;
 use wasm_bindgen::prelude::*;
@@ -264,9 +264,17 @@ impl NotificationManager {
         }
     }
 
-    /// Get unread message counts by room ID (base64).
-    pub fn unread_counts(&self) -> HashMap<String, usize> {
-        self.0.unread_counts.peek().clone()
+    /// Reactive unread count for one room (tracks the signal, so a badge that
+    /// reads this re-renders when the count changes).
+    pub fn unread_count(&self, room_id: &str) -> usize {
+        self.0.unread_counts.get().get(room_id).copied().unwrap_or(0)
+    }
+
+    /// Update the current user's id. Notifications only fire for messages from
+    /// *other* users, so this must be set once the async user load completes —
+    /// otherwise (id = None) your own messages are treated as someone else's.
+    pub fn set_current_user_id(&self, id: Option<String>) {
+        *self.0.current_user_id.lock().unwrap() = id;
     }
 
     /// Set the currently active room (for marking messages as read).

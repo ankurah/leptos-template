@@ -119,11 +119,12 @@ fn RoomListUl(
 fn RoomItem(room: RoomView, selected_room: RwSignal<Option<RoomView>>, notification_manager: NotificationManager) -> impl IntoView {
     let room_id = room.id().to_base64();
     let name = room.name().unwrap_or_default();
-    let unread_count = notification_manager.unread_counts().get(&room_id).copied().unwrap_or(0);
 
-    let is_selected = move || selected_room.get().as_ref().map(|r| r.id().to_base64() == room_id).unwrap_or(false);
+    let room_id_selected = room_id.clone();
+    let is_selected = move || selected_room.get().as_ref().map(|r| r.id().to_base64() == room_id_selected).unwrap_or(false);
 
     let room_for_click = room.clone();
+    let room_id_badge = room_id.clone();
 
     view! {
         <div
@@ -132,12 +133,12 @@ fn RoomItem(room: RoomView, selected_room: RwSignal<Option<RoomView>>, notificat
         >
             "# " {name}
             {move || {
-                if unread_count > 0 {
+                // Read reactively so the badge updates as messages arrive.
+                let unread_count = notification_manager.unread_count(&room_id_badge);
+                (unread_count > 0).then(|| {
                     let badge_text = if unread_count >= 10 { "10+".to_string() } else { unread_count.to_string() };
-                    Some(view! { <span class="unreadBadge">{badge_text}</span> })
-                } else {
-                    None
-                }
+                    view! { <span class="unreadBadge">{badge_text}</span> }
+                })
             }}
         </div>
     }
