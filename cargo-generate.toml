@@ -1,0 +1,8 @@
+[template]
+exclude = [
+  # Binary asset — must not be run through Liquid templating.
+  "leptos-app/sounds/notification.mp3",
+]
+
+[hooks]
+post = ["post-message.rhai"]
