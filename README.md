@@ -6,7 +6,7 @@ reactive updates across a Leptos (Rust/WASM) frontend and a Rust backend.
 ## Features
 
 - Real-time message synchronization
-- Persistent storage (Sled on server, IndexedDB in browser)
+- Persistent storage (Sled or Postgres on the server, IndexedDB in browser)
 - Automatic user creation with localStorage persistence
 - WebSocket-based peer communication
 - Reactive UI updates (Leptos + ankurah-signals)
@@ -14,8 +14,16 @@ reactive updates across a Leptos (Rust/WASM) frontend and a Rust backend.
 ## Architecture
 
 - **model/** — Shared data models (User, Room, Message)
-- **server/** — Rust server with Sled storage and WebSocket connector
+- **server/** — Rust server (Sled or Postgres storage) and WebSocket connector
 - **leptos-app/** — Leptos (CSR) frontend, compiled to WASM with [trunk](https://trunkrs.dev/)
+
+## Storage engine
+
+The durable server node stores data in **Sled** by default. Generate the project
+with `--define storage=postgres` (or choose Postgres at the prompt) to back it
+with **Postgres** instead; `./dev.sh` then brings up a Postgres container
+automatically on a randomized port. Both paths are wired through the
+`sled` / `postgres` features in `server/Cargo.toml`.
 
 ## Quick Start
 
